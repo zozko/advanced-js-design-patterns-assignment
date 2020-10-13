@@ -51,13 +51,12 @@ class UI {
 // Product class for gathering product related info
 class Product {
 
-  constructor () {
-    this.name = "DisCatcher Target";
-    this.category = " Discgolf";
-    this.description =
-    "a chain grid that catches fast and slow putts, heavy and light discs like no other target";
-    this.imageSrc = "images/discatcher.jpg";
-    this.price = 399;
+  constructor (productInfo) {
+    this.name = productInfo.name;
+    this.category = productInfo.category;
+    this.description = productInfo.description;
+    this.imageSrc = productInfo.imageSrc;
+    this.price = productInfo.price;
   }
 
   // API for Product objects for getting product info
@@ -77,8 +76,16 @@ class Product {
     return `€${this.price}`;
   }
 };
-  
-const DiscgolfProduct = new Product();
+
+
+// set up first product
+const DiscgolfProduct = new Product({
+  name: "DisCatcher Target",
+  category: " Discgolf",
+  description: "a chain grid that catches fast and slow putts, heavy and light discs like no other target",
+  imageSrc: "images/discatcher.jpg",
+  price: 399
+});
 
 const productImage = DiscgolfProduct.getImage();
 const productName = DiscgolfProduct.getName();
@@ -86,9 +93,8 @@ const productCategory = DiscgolfProduct.getCategory();
 const productDescription = DiscgolfProduct.getDescription();
 const productPrice = DiscgolfProduct.getPrice();
 
+// set up first product on the UI
 const UITemplate = document.querySelector(".js-product");
-const UIElement2 = UITemplate.cloneNode(true);
-
 const ShopUI = new UI(UITemplate);
 
 ShopUI.setProductImage(productImage);
@@ -97,14 +103,29 @@ ShopUI.setProductCategory(productCategory);
 ShopUI.setProductDescription(productDescription);
 ShopUI.setProductPrice(productPrice);
 
+// set up second product
+const DiscgolfProduct2 = new Product({
+  name: "Hero SuperAero",
+  category: " Discgolf",
+  description: "a disc that floats like a butterfly, holds up like a SuperHero",
+  imageSrc: "images/dog.jpg",
+  price: 14
+});
+
+const productImage2 = DiscgolfProduct2.getImage();
+const productName2 = DiscgolfProduct2.getName();
+const productCategory2 = DiscgolfProduct2.getCategory();
+const productDescription2 = DiscgolfProduct2.getDescription();
+const productPrice2 = DiscgolfProduct2.getPrice();
+
+const UIElement2 = UITemplate.cloneNode(true);
 const ShopUI2 = new UI(UIElement2);
 
-ShopUI2.setProductImage(productImage);
-ShopUI2.setProductName(productName);
-ShopUI2.setProductCategory(productCategory);
-ShopUI2.setProductDescription(productDescription);
-ShopUI2.setProductPrice(productPrice);
+ShopUI2.setProductImage(productImage2);
+ShopUI2.setProductName(productName2);
+ShopUI2.setProductCategory(productCategory2);
+ShopUI2.setProductDescription(productDescription2);
+ShopUI2.setProductPrice(productPrice2);
 
 const ProductListElement = document.querySelector(".js-product-list");
-
 ShopUI2.appendTo(ProductListElement);
