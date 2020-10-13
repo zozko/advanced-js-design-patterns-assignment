@@ -1,10 +1,9 @@
 // UI class for changing the user interface
 class UI {
-
-  // the UI constructor now has a node parameter
-  // to know which product in the list we are manipulating
-  constructor (node) {
-    this.node = node;
+  // the UI constructor now has a "templateElement" and a "parentElement" parameter
+  // to create a new DOM element based on the template
+  // and append it to the given parent
+  constructor(templateElement, parentElement) {
     // this is basically our configuration,
     // the part that might have to change when the HTML changes:
     // gathering the selectors for the elements we will be working with
@@ -14,12 +13,18 @@ class UI {
     this.productDescriptionSelector = ".js-product-description";
     this.productPriceSelector = ".js-product-price";
 
+    // clone the template to create a new DOM element
+    this.node = templateElement.cloneNode(true);
+    // and append the new DOM element to the end of the product list
+    parentElement.appendChild(this.node);
+
     // using the selectors above, we store the elements in private variables
     this.productImageElement = this.node.querySelector(this.productImageSelector);
     this.productNameElement = this.node.querySelector(this.productNameSelector);
     this.productCategoryElement = this.node.querySelector(this.productCategorySelector);
     this.productDescriptionElement = this.node.querySelector(this.productDescriptionSelector);
     this.productPriceElement = this.node.querySelector(this.productPriceSelector);
+
   }
 
   // this is the API for our UI objects:
@@ -27,25 +32,28 @@ class UI {
   // content of the stored elements
   setProductImage (src) {
     this.productImageElement.src = src;
-  };
+  }
   setProductName (name) {
     this.productNameElement.textContent = name;
-  };
+  }
   setProductCategory (category) {
     this.productCategoryElement.textContent = category;
-  };
+  }
   setProductDescription (description) {
     this.productDescriptionElement.textContent = description;
-  };
+  }
   setProductPrice (price) {
     this.productPriceElement.textContent = price;
-  };
-
-  // we need a new method to append the cloned product elements to the list
-  appendTo (listElement) {
-    listElement.appendChild(this.node);
   }
 
+  // let's add a method that sets our UI up in one go
+  setUp (productInfo) {
+    this.productImageElement.src = productInfo.image;
+    this.productNameElement.textContent = productInfo.name;
+    this.productCategoryElement.textContent = productInfo.category;
+    this.productDescriptionElement.textContent = productInfo.description;
+    this.productPriceElement.textContent = productInfo.price;
+  }
 };
 
 // Product class for gathering product related info
@@ -75,6 +83,16 @@ class Product {
   getPrice () {
     return `€${this.price}`;
   }
+  // let's add a method that returns all that
+  getInfo () {
+    return {
+      name: this.name,
+      category: this.category,
+      description: `${this.name} is ${this.description}.`,
+      image: this.imageSrc,
+      price: `€${this.price}`
+    };
+  }
 };
 
 
@@ -87,21 +105,17 @@ const DiscgolfProduct = new Product({
   price: 399
 });
 
-const productImage = DiscgolfProduct.getImage();
-const productName = DiscgolfProduct.getName();
-const productCategory = DiscgolfProduct.getCategory();
-const productDescription = DiscgolfProduct.getDescription();
-const productPrice = DiscgolfProduct.getPrice();
+// simplified product info
+const productInfo = DiscgolfProduct.getInfo();
 
 // set up first product on the UI
 const UITemplate = document.querySelector(".js-product");
-const ShopUI = new UI(UITemplate);
+const ProductListElement = document.querySelector(".js-product-list");
+const ShopUI = new UI(UITemplate, ProductListElement);
 
-ShopUI.setProductImage(productImage);
-ShopUI.setProductName(productName);
-ShopUI.setProductCategory(productCategory);
-ShopUI.setProductDescription(productDescription);
-ShopUI.setProductPrice(productPrice);
+// simplified UI setup - luckily, the object shape is the same as 
+// what getInfo() returned
+ShopUI.setUp(productInfo);
 
 // set up second product
 const DiscgolfProduct2 = new Product({
@@ -112,20 +126,9 @@ const DiscgolfProduct2 = new Product({
   price: 14
 });
 
-const productImage2 = DiscgolfProduct2.getImage();
-const productName2 = DiscgolfProduct2.getName();
-const productCategory2 = DiscgolfProduct2.getCategory();
-const productDescription2 = DiscgolfProduct2.getDescription();
-const productPrice2 = DiscgolfProduct2.getPrice();
+const productInfo2 = DiscgolfProduct2.getInfo();
+const ShopUI2 = new UI(UITemplate, ProductListElement);
+ShopUI2.setUp(productInfo2);
 
-const UIElement2 = UITemplate.cloneNode(true);
-const ShopUI2 = new UI(UIElement2);
-
-ShopUI2.setProductImage(productImage2);
-ShopUI2.setProductName(productName2);
-ShopUI2.setProductCategory(productCategory2);
-ShopUI2.setProductDescription(productDescription2);
-ShopUI2.setProductPrice(productPrice2);
-
-const ProductListElement = document.querySelector(".js-product-list");
-ShopUI2.appendTo(ProductListElement);
+// we no longer need the template, so we can clean it up now
+UITemplate.remove();
