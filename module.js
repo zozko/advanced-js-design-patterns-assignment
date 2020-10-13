@@ -68,7 +68,14 @@ const Product = (() => {
   }
 })();
 
+const productImage = Product.getImage();
 const productName = Product.getName();
-console.log(productName); // logs "DisCatcher Target"
+const productCategory = Product.getCategory();
+const productDescription = Product.getDescription();
+const productPrice = Product.getPrice();
 
-UI.setProductName("test!");
+UI.setProductImage(productImage);
+UI.setProductName(productName);
+UI.setProductCategory(productCategory);
+UI.setProductDescription(productDescription);
+UI.setProductPrice(productPrice);
