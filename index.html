@@ -13,20 +13,25 @@
         <div class="card tile is-child">
           <div class="card-image">
             <figure class="image is-4by3">
-              <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+              <!--
+                added class names to the elements whose content we want to change later
+                started the class names with "js-" so that we know that the JavaScript is using it and
+                won't accidentally change it with a styling change
+              -->
+              <img class="js-product-image" src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
             </figure>
           </div>
           <div class="card-content">
             <div class="content">
-              <p class="title is-4">Product Name</p>
-              <p class="subtitle is-6">category</p>
-              <p>
+              <p class="js-product-name title is-4">Product Name</p>
+              <p class="js-product-category subtitle is-6">category</p>
+              <p class="js-product-description">
               Product description, not super long, not super short. Just a couple of sentences.
               </p>
             </div>
             <footer class="level">
               <div class="level-left">
-                <div class="level-item title is-4">
+                <div class="js-product-price level-item title is-4">
                   €499
                 </div>
               </div>
