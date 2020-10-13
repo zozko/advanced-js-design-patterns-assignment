@@ -1,3 +1,4 @@
+// UI module for changing the user interface
 const UI = (() => {
 
   // this is basically our configuration,
@@ -33,10 +34,41 @@ const UI = (() => {
       productDescriptionElement.textContent = description;
     },
     setProductPrice: (price) => {
-      productPriceElement.textContent = `€${price}`;
+      productPriceElement.textContent = price;
     },
-  }
-
+  };
 })();
+
+// Product module for gathering product related info
+const Product = (() => {
+  const name = "DisCatcher Target";
+  const category = " Discgolf";
+  const description =
+    "a chain grid that catches fast and slow putts, heavy and light discs like no other target";
+  const imageSrc = "images/discatcher.jpg";
+  const price = 399;
+
+  // public API for Product module for getting product info
+  return {
+    getName: () => {
+      return name;
+    },
+    getCategory: () => {
+      return category;
+    },
+    getDescription: () => {
+      return `${name} is ${description}.`;
+    },
+    getImage: () => {
+      return imageSrc;
+    },
+    getPrice: () => {
+      return `€${price}`;
+    }
+  }
+})();
+
+const productName = Product.getName();
+console.log(productName); // logs "DisCatcher Target"
 
 UI.setProductName("test!");
