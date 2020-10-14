@@ -3,7 +3,7 @@
   class PubSub {
     constructor () {
       // this is where we will gather event handlers
-      this.topics = [];
+      this.topics = {};
     }
 
     // this is how we check if we already have handlers for the given topic
