@@ -1,7 +1,7 @@
 // start with an IIFE to keep the global namespace clean
 (function () {
   // UI class for changing the user interface
-  class CartUI {
+  class CartView {
     // we only have one cart,
     // so we no longer need to clone a template and
     // append to a body
@@ -38,10 +38,10 @@
   }
 
   // this way the other JS files can also use this class
-  window.CartUI = CartUI;
+  window.CartView = CartView;
 
   // Cart class for adding items to cart
-  class Cart {
+  class CartModel {
     constructor() {
       this.items = [];
 
@@ -62,5 +62,5 @@
   }
 
   // this way the other JS files can also use this class
-  window.Cart = Cart;
+  window.CartModel = CartModel;
 })();

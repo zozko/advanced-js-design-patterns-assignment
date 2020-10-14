@@ -16,14 +16,14 @@
 
       // initialize cart
       this.cartContainer = document.querySelector(".js-cart");
-      this.cartUI = new CartUI(this.cartContainer);
-      this.cart = new Cart();
+      this.cartUI = new CartView(this.cartContainer);
+      this.cart = new CartModel();
     }
 
     _initProduct(productData) {
-      const newProduct = new Product(productData);
+      const newProduct = new ProductModel(productData);
       const productInfo = newProduct.getInfo();
-      const newProductUI = new ProductUI(
+      const newProductUI = new ProductView(
         this.UITemplate,
         this.ProductListElement
       );

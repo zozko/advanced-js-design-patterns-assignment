@@ -2,7 +2,7 @@
 (function(){
 
 // UI class for changing the user interface
-class ProductUI {
+class ProductView {
   // the UI constructor now has a "templateElement" and a "parentElement" parameter
   // to create a new DOM element based on the template
   // and append it to the given parent
@@ -73,10 +73,10 @@ class ProductUI {
 };
 
 // this way the other JS files can also use this class
-window.ProductUI = ProductUI;
+window.ProductView = ProductView;
 
 // Product class for gathering product related info
-class Product {
+class ProductModel {
 
   constructor (productInfo) {
     this.name = productInfo.name;
@@ -86,7 +86,7 @@ class Product {
     this.price = productInfo.price;
   }
 
-  // API for Product objects for getting product info
+  // API for ProductModel objects for getting product info
   getName () {
     return this.name;
   }
@@ -115,6 +115,6 @@ class Product {
 };
 
 // this way the other JS files can also use this class
-window.Product = Product;
+window.ProductModel = ProductModel;
 
 })();
