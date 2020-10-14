@@ -41,13 +41,9 @@ ShopUI2.setUp(productInfo2);
 // we no longer need the template, so we can clean it up now
 UITemplate.remove();
 
-// test out cart
+// initialize cart
 const cartContainer = document.querySelector(".js-cart");
 const cartUI = new CartUI(cartContainer);
 const cart = new Cart();
-
-cart.addItem({ name: "test item", price: 1 });
-const cartItems = cart.getItems();
-cartUI.updateCart(cartItems);
 
 })();
