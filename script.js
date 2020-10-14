@@ -1,49 +1,57 @@
 // start with an IIFE to keep the global namespace clean
 (function(){
+  class ShopController {
+    constructor(productList) {
+      this.productList = productList;
+      this.UITemplate = document.querySelector(".js-product");
+      this.ProductListElement = document.querySelector(".js-product-list");
+      // we stored the template in a variable
+      // so now we can remove it from the live DOM
+      this.UITemplate.remove();
 
-// Product and ProductUI are stored on window / in global variables,
-// so we can use them here as well
+      // initialize products
+      for (let product of this.productList) {
+        this._initProduct(product);
+      }
 
-// set up first product
-const DiscgolfProduct = new Product({
-  name: "DisCatcher Target",
-  category: " Discgolf",
-  description: "a chain grid that catches fast and slow putts, heavy and light discs like no other target",
-  imageSrc: "images/discatcher.jpg",
-  price: 399
-});
+      // initialize cart
+      this.cartContainer = document.querySelector(".js-cart");
+      this.cartUI = new CartUI(this.cartContainer);
+      this.cart = new Cart();
+    }
 
-// simplified product info
-const productInfo = DiscgolfProduct.getInfo();
+    _initProduct(productData) {
+      const newProduct = new Product(productData);
+      const productInfo = newProduct.getInfo();
+      const newProductUI = new ProductUI(
+        this.UITemplate,
+        this.ProductListElement
+      );
+      newProductUI.setUp(productInfo);
+    }
+  }
 
-// set up first product on the UI
-const UITemplate = document.querySelector(".js-product");
-const ProductListElement = document.querySelector(".js-product-list");
-const ShopUI = new ProductUI(UITemplate, ProductListElement);
+  // this would most likely come from some database through an API of sorts,
+  // but for now, we have all our products in this list:
+  const productList = [
+    {
+      name: "DisCatcher Target",
+      category: " Discgolf",
+      description:
+        "a chain grid that catches fast and slow putts, heavy and light discs like no other target",
+      imageSrc: "images/discatcher.jpg",
+      price: 399,
+    },
+    {
+      name: "Hero SuperAero",
+      category: " Discgolf",
+      description:
+        "a disc that floats like a butterfly, holds up like a SuperHero",
+      imageSrc: "images/dog.jpg",
+      price: 14,
+    },
+  ];
 
-// simplified UI setup - luckily, the object shape is the same as 
-// what getInfo() returned
-ShopUI.setUp(productInfo);
-
-// set up second product
-const DiscgolfProduct2 = new Product({
-  name: "Hero SuperAero",
-  category: " Discgolf",
-  description: "a disc that floats like a butterfly, holds up like a SuperHero",
-  imageSrc: "images/dog.jpg",
-  price: 14
-});
-
-const productInfo2 = DiscgolfProduct2.getInfo();
-const ShopUI2 = new ProductUI(UITemplate, ProductListElement);
-ShopUI2.setUp(productInfo2);
-
-// we no longer need the template, so we can clean it up now
-UITemplate.remove();
-
-// initialize cart
-const cartContainer = document.querySelector(".js-cart");
-const cartUI = new CartUI(cartContainer);
-const cart = new Cart();
-
+  // launch shop initialization by creating a new ShopController instance
+  const berryShop = new ShopController(productList);
 })();
