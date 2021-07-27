@@ -31,7 +31,6 @@
 
 
 
-        //zzzz
         // this is the public API for our cart UI objects:
         // method to change the UI by only changing the
         // content of the cart table
